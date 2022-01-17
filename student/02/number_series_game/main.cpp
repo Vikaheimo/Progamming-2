@@ -8,11 +8,11 @@ int main()
     std::cin >> lukumaara;
     for (int luku = 1; luku <= lukumaara; ++luku){
         if (luku % 21 == 0) {
-            std::cout << "Zip Boing" << std::endl;
+            std::cout << "zip boing" << std::endl;
         } else if (luku % 3 == 0){
-            std::cout << "Zip" << std::endl;
+            std::cout << "zip" << std::endl;
         } else if (luku % 7 == 0){
-            std::cout << "Boing" << std::endl;
+            std::cout << "boing" << std::endl;
         } else {
             std::cout << luku << std::endl;
         }
