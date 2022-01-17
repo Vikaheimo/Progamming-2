@@ -17,14 +17,20 @@ int main()
             for (int luku2 = 1; luku2 <= numero; ++luku2){
                 if (luku1 * luku2 == numero){
                     if (abs(num1 - num2) > abs(luku1 - luku2)){
-                        num1 = luku1;
-                        num2 = luku2;
+                        if (luku1 > luku2){
+                            num1 = luku1;
+                            num2 = luku2;
+                        } else{
+                            num1 = luku2;
+                            num2 = luku1;
+                        }
+
                     }
 
                 }
             }
         }
-        cout << numero << " = " << num1 << " * " << num2 << endl;
+        cout << numero << " = " << num2 << " * " << num1 << endl;
     }
     return 0;
 }
