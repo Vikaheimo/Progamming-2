@@ -57,6 +57,11 @@ int main()
         cout << "Enter the text to be encrypted: ";
         cin >> muutettava;
 
+        if (not kaikki_pienella(muutettava)){
+            cout << "Error! The text to be encrypted must contain only lower case characters." << endl;
+            return 1;
+        }
+
         string uusi = salaa(muutettava, salattava);
         cout <<"Encrypted text: "<< uusi << endl;
 
