@@ -58,7 +58,7 @@ int main()
         cin >> muutettava;
 
         string uusi = salaa(muutettava, salattava);
-        cout << uusi << endl;
+        cout <<"Encrypted text: "<< uusi << endl;
 
     }
 
