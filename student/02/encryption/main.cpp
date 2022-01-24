@@ -43,12 +43,14 @@ int main()
 
     if (salattava.length() != 26){
         cout << "Error! The encryption key must contain 26 characters." << endl;
-
+        return 1;
     } else if (not kaikki_pienella(salattava)){
         cout << "Error! The encryption key must contain only lower case characters." << endl;
+        return 1;
 
     } else if (not kaikki_kirjaimet(salattava)){
         cout << "Error! The encryption key must contain all alphabets a-z." << endl;
+        return 1;
 
     } else {
         string muutettava;
