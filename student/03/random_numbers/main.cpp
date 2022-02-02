@@ -22,8 +22,6 @@ int main()
     cin >> lower_bound;
     cout << "Enter an upper bound: ";
     cin >> upper_bound;
-    cout << "Enter a seed value: ";
-    cin >> seed;
 
     if(lower_bound >= upper_bound)
     {
@@ -31,7 +29,8 @@ int main()
              << endl;
         return EXIT_FAILURE;
     }
-
+    cout << "Enter a seed value: ";
+    cin >> seed;
     produce_random_numbers(lower_bound, upper_bound, seed);
 
 
