@@ -4,8 +4,8 @@
 
 using namespace std;
 
-void produce_random_numbers(unsigned int lower, unsigned int upper){
-    default_random_engine gen(42);
+void produce_random_numbers(unsigned int lower, unsigned int upper, unsigned int seed){
+    default_random_engine gen(seed);
     uniform_int_distribution<int> distr(lower, upper);
     string valinta;
     while (valinta !="q"){
@@ -17,11 +17,13 @@ void produce_random_numbers(unsigned int lower, unsigned int upper){
 
 int main()
 {
-    unsigned int lower_bound, upper_bound;
+    unsigned int lower_bound, upper_bound, seed;
     cout << "Enter a lower bound: ";
     cin >> lower_bound;
     cout << "Enter an upper bound: ";
     cin >> upper_bound;
+    cout << "Enter a seed value: ";
+    cin >> seed;
 
     if(lower_bound >= upper_bound)
     {
@@ -30,7 +32,7 @@ int main()
         return EXIT_FAILURE;
     }
 
-    produce_random_numbers(lower_bound, upper_bound);
+    produce_random_numbers(lower_bound, upper_bound, seed);
 
 
     return EXIT_SUCCESS;
