@@ -33,7 +33,7 @@ void Account::generate_iban()
     iban_.append(suffix);
 }
 void Account::print() const{
-    std::cout << owner_ << " : " << iban_ << " : " << saldo_ << std::endl;
+    std::cout << owner_ << " : " << iban_ << " : " << saldo_ << " euros"<< std::endl;
 }
 
 void Account::set_credit_limit(int new_limit){
