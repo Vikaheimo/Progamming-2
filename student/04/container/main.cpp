@@ -32,7 +32,7 @@ bool is_ordered_non_strict_ascending(std::vector< int > integers){
 }
 
 bool is_geometric_series(std::vector< int > integers){
-    if (integers.size() > 1){
+    if (integers.size() > 1 and integers.front() != 0){
         int kerroin = integers.at(1) / integers.at(0);
         for (unsigned long i = 1; i < integers.size()-1; i++){
             if (integers.at(i) / integers.at(i-1) != kerroin){
@@ -40,9 +40,12 @@ bool is_geometric_series(std::vector< int > integers){
             }
         }
         return true;
+    } else if (integers.front() == 0){
+        return false;
     } else{
         return true;
     }
+
 
 }
 bool is_arithmetic_series(std::vector< int > integers){
