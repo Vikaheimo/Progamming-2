@@ -14,6 +14,7 @@ std::vector <std::string> split(std::string text, char separator, bool skip=fals
            jono = "";
         }
     }
+    arvot.push_back(jono);
     return arvot;
 }
 
