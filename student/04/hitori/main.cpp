@@ -160,13 +160,30 @@ bool poista_laudalta(std::vector <std::vector<int>> &lauta, int x, int y){
     }
 }
 
+
 int main()
 {
-    auto pelilauta = taytto();
-    print(pelilauta);
-    poista_laudalta(pelilauta, 1,1);
-    print(pelilauta);
-    poista_laudalta(pelilauta, 1,1);
-    poista_laudalta(pelilauta, 0,1);
+    std::vector <std::vector<int>> pelilauta = taytto();
+
+    // ulompi while loop tehdään pelin voittamiseen ja sisempi laudalta arvojen poistamiseen
+    while(true) {
+        std::string x;
+        std::string y;
+        print(pelilauta);
+        while (true) {
+            std::cout << "Enter removable element (x, y): ";
+            std::cin >> x >> y;
+
+            if (x=="q" or x == "Q"){
+                std::cout << "Quitting" << std::endl;
+                return 0;
+            }
+            // jos poisto onnistuu niin hypätään pois sisemmästä while-loopista
+            if (poista_laudalta(pelilauta, stoi_with_check(x), stoi_with_check(y))){
+                break;
+            }
+
+        }
+    }
     return 0;
 }
