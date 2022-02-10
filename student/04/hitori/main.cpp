@@ -145,10 +145,28 @@ std::vector <std::vector <int>> taytto(){
     }
 
 }
+// funktio jolla voidaan poistaa halutusta paikasta numero, jos kyseinen paikka ei ole pelilaudalla tai
+// numero on jo poistettu tulostaa funktio virheilmoituksen pelaajalle
+bool poista_laudalta(std::vector <std::vector<int>> &lauta, int x, int y){
+    if (x < 1 or x > 5 or y < 1 or y > 5){
+        std::cout << "Out of board" << std::endl;
+        return false;
+    } else if (lauta.at(y-1).at(x-1) == 0){
+        std::cout << "Already removed" << std::endl;
+        return false;
+    } else {
+        lauta[y-1][x-1] = 0;
+        return true;
+    }
+}
 
 int main()
 {
     auto pelilauta = taytto();
     print(pelilauta);
+    poista_laudalta(pelilauta, 1,1);
+    print(pelilauta);
+    poista_laudalta(pelilauta, 1,1);
+    poista_laudalta(pelilauta, 0,1);
     return 0;
 }
