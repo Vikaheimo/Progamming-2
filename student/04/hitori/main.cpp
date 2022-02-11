@@ -38,6 +38,7 @@
 #include <iostream>
 #include <vector>
 #include <random>
+#include <algorithm>
 using namespace std;
 
 const unsigned int BOARD_SIDE = 5;
@@ -104,38 +105,45 @@ std::vector <std::vector <int>> taytto(){
     std::string tapa;
     std::vector <std::vector <int>> lauta;
     while(true){
+        // kysytään arvoa niin kauan kunnes käyttäjä antaa oikean arvon
         std::cout << "Select start (R for random, I for input): ";
         std::cin >> tapa;
-
+        // jos käyttäjä valitsee satunnaisen täyttövaihtoehdon
         if (tapa == "r" or tapa == "R"){
+            // kysytään käyttäjältä simeneluvun arvoa ja alusetaan satunnislukugeneraattori
             int seed;
             std::cout << "Enter seed value: ";
             std::cin >> seed;
             default_random_engine gen(seed);
             uniform_int_distribution<int> distr(1,5);
             std::vector <int>rivi;
+            // käydään läpi kaikki pelinlaudan paikat ja luodaan arvoilla pelilauta
             for (int rivinum = 0;rivinum < 5; rivinum++){
                 for (int sarakenum = 0;sarakenum < 5; sarakenum++){
                     rivi.push_back(distr(gen));
 
                 }
+                // lisätään rivi numeroita pelilaudalle ja tyhjennetään rivi vektori
                 lauta.push_back(rivi);
                 rivi.clear();
 
             }
             return lauta;
         }
+        // käyttäjän arvoilla täyttämisen vaihtoehto
         else if (tapa == "I" or tapa == "i"){
             std::cout << "Input: ";
             int luku;
 
             std::vector <int>rivi;
+            // käydään läpi kaikki pelilaudan paikat ja kysytään jokaiselle paikalle käyttäjältä arvoa
             for (int rivinum = 0;rivinum < 5; rivinum++){
                 for (int sarakenum = 0;sarakenum < 5; sarakenum++){
                     std::cin >> luku;
                     rivi.push_back(luku);
 
                 }
+                // lisätään rivi numeroita pelilaudalle ja tyhjennetään rivi vektori
                 lauta.push_back(rivi);
                 rivi.clear();
 
@@ -147,19 +155,60 @@ std::vector <std::vector <int>> taytto(){
 }
 // funktio jolla voidaan poistaa halutusta paikasta numero, jos kyseinen paikka ei ole pelilaudalla tai
 // numero on jo poistettu tulostaa funktio virheilmoituksen pelaajalle
+// paluttaa totuusarvon riippuen siitä onnistuiko laudalta numeron poistaminen
 bool poista_laudalta(std::vector <std::vector<int>> &lauta, int x, int y){
+    // jos x tai y ei ole pelilaudalla
     if (x < 1 or x > 5 or y < 1 or y > 5){
         std::cout << "Out of board" << std::endl;
         return false;
+    // jos koorinaateista (x, y) oleva luku on jo poistetttu
     } else if (lauta.at(y-1).at(x-1) == 0){
         std::cout << "Already removed" << std::endl;
         return false;
+    // poisetaan luku pelilaudalta eli siis korvataan numerolla 0
     } else {
         lauta[y-1][x-1] = 0;
         return true;
     }
 }
-
+// funktio tarkistamaan sisältääkö vektori annetun luvun
+// palauttaa tottuusarvon riippuen siitä löytyykö luku vektorista
+bool numero_vektorissa(std::vector <int> vektori, int numero){
+    for(int x:vektori){
+        if (numero == x){
+            return true;
+        }
+    }
+    return false;
+}
+// funktio tarkistamaan löytyykö riveiltä ja sarakkeilta eri numerot
+// palauttaa arvon false jos riviltä tai sarakkeelta löytyy samat arvot
+// jos kaikkien rivien ja sarakkeiden arvot ovat erialisia palautetaan true
+bool pelin_voiton_tarkistus(std::vector <std::vector<int>> lauta){
+    // käydään koko pelilauta läpi kahdella sisäkäisellä for loopilla
+    for(int i = 0; i<5; i++){
+        // alustetaan muuttujat edelliset johon tallennetaan rivin edelliset luvut.
+        std::vector <int> edelliset_rivi, edelliset_sarake;
+        for(int j = 0; j < 5; j++){
+            // luodaan sarakkeen ja rivin arvolle muuttujat
+            int rivin_arvo = lauta.at(i).at(j);
+            int sarakkeen_arvo = lauta.at(j).at(i);
+            //tarkistetaan jos sarakken tai rivin arvo löytyy jo niitä vastaavista vektoreista
+            // jos luku on nollla eli siis poisettu hypätään sen yli
+            if (numero_vektorissa(edelliset_rivi, rivin_arvo)
+                and rivin_arvo != 0){
+                    return false;
+            } else if (numero_vektorissa(edelliset_sarake, sarakkeen_arvo) and sarakkeen_arvo != 0) {
+                return false;
+            }
+            // jos lukuja ei ole vektoreissa niin lisätään se vataavaan vektoriin
+            edelliset_rivi.push_back(rivin_arvo);
+            edelliset_sarake.push_back(sarakkeen_arvo);
+        }
+    }
+    // jos millään rivillä tai sarakkeela ei ole samaa lukua kuin kerran palautetaan true
+    return true;
+}
 
 int main()
 {
@@ -170,6 +219,11 @@ int main()
         std::string x;
         std::string y;
         print(pelilauta);
+        // pelin voiton tarkistus
+        if (pelin_voiton_tarkistus(pelilauta)){
+            std::cout << "You won" << std::endl;
+            return 0;
+        }
         while (true) {
             std::cout << "Enter removable element (x, y): ";
             std::cin >> x >> y;
@@ -184,6 +238,7 @@ int main()
             }
 
         }
+
+
     }
-    return 0;
 }
