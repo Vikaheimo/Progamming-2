@@ -209,18 +209,94 @@ bool pelin_voiton_tarkistus(std::vector <std::vector<int>> lauta){
     // jos millään rivillä tai sarakkeela ei ole samaa lukua kuin kerran palautetaan true
     return true;
 }
+// tarkistaa onko anntetulla vektorilla peräkkäisiä nollia
+// jos on palauttaa true, muutoin false
+bool tarkista_perakkaiset_nollat(std::vector <std::vector<int>> lauta){
+    for(std::vector<int> lista:lauta){
+        for(int i=1;i<5;i++){
+            // tarkistaa peräkkäiset nuerot yksi kerrallaan ovatko ne nollia
+            if (lista.at(i)==lista.at(i-1) and lista.at(i-1) == 0){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+// tarkistaa numeron ympäryksen, jottei se ole irrallaan muista
+// palauttaa true jos on irrallaan muuten false
+bool tarkista_palan_ymparys(std::vector <std::vector<int>> lauta,int x, int y){
+    // luodaan muuttujat joita käytetään ympärysten tarkastamiseen
+    bool p,e,i,l;
+    // jos numero on ensimmäisellä tai viimeisellä rivillä niin täytyy tarkistaa vain yksi
+    // numero ympäriltä
+    if (x==0){
+        p = true;
+        e = (lauta.at(y).at(x+1)==0);
+    } else if (x==4){
+        e = true;
+        p = (lauta.at(y).at(x-1)==0);
+    } else{
+        p = (lauta.at(y).at(x+1)==0);
+        e = (lauta.at(y).at(x-1)==0);
+    }
+    // jos numero on ensimmäisellä tai viimeisellä sarakkeella niin täytyy tarkistaa vain yksi
+    // numero ympäriltä
+    if (y==0){
+        l = true;
+        i = (lauta.at(y+1).at(x)==0);
+    } else if (y==4){
+        i = true;
+        l = (lauta.at(y-1).at(x)==0);
+    } else{
+        i = (lauta.at(y+1).at(x)==0);
+        l = (lauta.at(y-1).at(x)==0);
+    }
+    // jos kaikki arvot ovat tosi, eli siis kun kaikki ympärillä olevat arvot ovat 0
+    // palauttaa true
+    return (p and e and i and l);
+}
+
+// fuktio joka tarkistaa onko pelaaja hävinnyt pelin
+// jos pelaaja häviää pelin, niin palttaa true, muutoin false
+bool pelin_havion_tarkistus(std::vector <std::vector<int>> lauta){
+
+    std::vector <std::vector<int>> sarakkeet;
+    // käydään läpi pelilauta ja tallenettaan jokaisen sarakkeen arvo samanlaiseen vektoriiin
+    // kuin pelilaudassa, tarkistetaan samalla onko palasen ympärillä vain tyhjä palasia, ja
+    // jos näin on tiedämme että pelaaja on hävinnyt pelin
+    for(int i=0;i<5;i++){
+        std::vector<int> sarake_rivi;
+        for(int j=0;j<5;j++){
+            sarake_rivi.push_back(lauta.at(j).at(i));
+            if (tarkista_palan_ymparys(lauta, i, j)){
+                return true;
+            }
+
+        }
+        sarakkeet.push_back(sarake_rivi);
+    }
+    // tarkistaa onko peräkkäisiä tyhjiä ruutuja riveillä tai sarakkeilla
+    if (tarkista_perakkaiset_nollat(sarakkeet) or
+            tarkista_perakkaiset_nollat(lauta)) {
+        return true;
+    } else
+    return false;
+}
 
 int main()
 {
     std::vector <std::vector<int>> pelilauta = taytto();
-
     // ulompi while loop tehdään pelin voittamiseen ja sisempi laudalta arvojen poistamiseen
     while(true) {
         std::string x;
         std::string y;
         print(pelilauta);
-        // pelin voiton tarkistus
-        if (pelin_voiton_tarkistus(pelilauta)){
+
+        // pelin voiton ja hävin tarkastus
+        if (pelin_havion_tarkistus(pelilauta)){
+            std::cout << "You lost" << std::endl;
+            return 0;
+        } else if (pelin_voiton_tarkistus(pelilauta)){
             std::cout << "You won" << std::endl;
             return 0;
         }
