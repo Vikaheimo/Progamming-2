@@ -107,7 +107,7 @@ std::vector <std::vector <int>> taytto(){
     while(true){
         // kysytään arvoa niin kauan kunnes käyttäjä antaa oikean arvon
         std::cout << "Select start (R for random, I for input): ";
-        std::cin >> tapa;
+        std::getline(std::cin, tapa);
         // jos käyttäjä valitsee satunnaisen täyttövaihtoehdon
         if (tapa == "r" or tapa == "R"){
             // kysytään käyttäjältä simeneluvun arvoa ja alusetaan satunnislukugeneraattori
@@ -302,12 +302,15 @@ int main()
         }
         while (true) {
             std::cout << "Enter removable element (x, y): ";
-            std::cin >> x >> y;
+            // kysytään ensin vain ensimäistä arvoa, koska jos käyttäjä haluaa
+            // poistua ohjelmasta, niin on se näin mahdollista
+            std::cin >> x;
 
             if (x=="q" or x == "Q"){
                 std::cout << "Quitting" << std::endl;
                 return 0;
             }
+            std::cin >> y;
             // jos poisto onnistuu niin hypätään pois sisemmästä while-loopista
             if (poista_laudalta(pelilauta, stoi_with_check(x), stoi_with_check(y))){
                 break;
