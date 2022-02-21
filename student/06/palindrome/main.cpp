@@ -11,7 +11,7 @@ bool palindrome_recursive(std::string s)
     // ------------
     if (s.size() == 1 or (s.size() == 2 and s.front() == s.back())){
         return true;
-    } else if (s.size() > 2){
+    } else if (s.size() > 2 and s.at(0) == s.at(s.size()-1)){
         return palindrome_recursive(s.substr(1, s.size() - 1));
     } else {
         return false;
