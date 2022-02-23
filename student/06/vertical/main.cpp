@@ -9,10 +9,14 @@ void print_vertical(unsigned int num)
 {
     RECURSIVE_FUNC
     // Do not remove RECURSIVE_FUNC declaration, it's necessary for automatic testing to work
-    // ------------
-
-
-    // Add your implementation here
+    std::string a = to_string(num);
+    cout << a.at(0) << std::endl;
+    if (a.size() == 1){
+        return;
+    } else{
+        int b = stoi(a.substr(1, a.size()-1));
+        return print_vertical(b);
+    }
 }
 
 // Do not modify rest of the code, or the automated testing won't work.
