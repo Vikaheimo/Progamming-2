@@ -2,7 +2,9 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <map>
 
+using std::string, std::vector, std::map, std::cout;
 const std::string HELP_TEXT = "S = store id1 i2\nP = print id\n"
                               "C = count id\nD = depth id\n";
 
@@ -29,10 +31,46 @@ std::vector<std::string> split(const std::string& s,
     }
     return result;
 }
+void print_verkosto (map<string, vector<string>> data, string name, int depth){
+    cout << string(depth*2, '.') << name << std::endl;
+    map<string, vector<string>>::iterator itt = data.find(name);
+    if (itt != data.end()){
+        for (string under: itt->second){
+            print_verkosto(data, under, depth+1);
+        }
+    }
+}
 
+int laske_verkosto (map<string, vector<string>> data, string name){
+    map<string, vector<string>>::iterator itt = data.find(name);
+    if (itt != data.end()){
+        int summa = 1;
+        for (string under: itt->second){
+            summa += laske_verkosto(data, under);
+        }
+        return summa;
+    } else {
+        return 1;
+    }
+}
+int laske_verkoston_syvyys(map<string, vector<string>> data, string name, bool first=false){
+    map<string, vector<string>>::iterator itt = data.find(name);
+    int maks_syvyys = 0;
+    if (itt != data.end()){
+        for (string under: itt->second){
+            int s = laske_verkoston_syvyys(data, under);
+            if (s > maks_syvyys){
+                maks_syvyys = s;
+            }
+        }
+        return maks_syvyys + 1;
+    } else {
+        return 1;
+    }
+}
 int main()
 {
-    // TODO: Implement the datastructure here
+    map<string, vector<string>> data;
 
 
     while(true)
@@ -60,7 +98,14 @@ int main()
             std::string id1 = parts.at(1);
             std::string id2 = parts.at(2);
 
-            // TODO: Implement the command here!
+            map<string, vector<string>>::iterator it = data.find(id1);
+            if (it !=data.end()){
+                if (it->second.back() != id2){
+                    it -> second.push_back(id2);
+                }
+            } else{
+                data.insert({id1, {id2}});
+            }
 
         }
         else if(command == "P" or command == "p")
@@ -72,7 +117,7 @@ int main()
             }
             std::string id = parts.at(1);
 
-            // TODO: Implement the command here!
+            print_verkosto(data, id, 0);
 
         }
         else if(command == "C" or command == "c")
@@ -84,7 +129,9 @@ int main()
             }
             std::string id = parts.at(1);
 
-            // TODO: Implement the command here!
+            cout << laske_verkosto(data, id) - 1 << std::endl;
+
+            
 
         }
         else if(command == "D" or command == "d")
@@ -96,7 +143,7 @@ int main()
             }
             std::string id = parts.at(1);
 
-            // TODO: Implement the command here!
+            cout << laske_verkoston_syvyys(data, id, true)  << std::endl;
 
         }
         else if(command == "Q" or command == "q")
