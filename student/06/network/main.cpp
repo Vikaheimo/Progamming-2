@@ -53,7 +53,7 @@ int laske_verkosto (map<string, vector<string>> data, string name){
         return 1;
     }
 }
-int laske_verkoston_syvyys(map<string, vector<string>> data, string name, bool first=false){
+int laske_verkoston_syvyys(map<string, vector<string>> data, string name){
     map<string, vector<string>>::iterator itt = data.find(name);
     int maks_syvyys = 0;
     if (itt != data.end()){
@@ -143,7 +143,7 @@ int main()
             }
             std::string id = parts.at(1);
 
-            cout << laske_verkoston_syvyys(data, id, true)  << std::endl;
+            cout << laske_verkoston_syvyys(data, id)  << std::endl;
 
         }
         else if(command == "Q" or command == "q")
