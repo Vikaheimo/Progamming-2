@@ -36,8 +36,10 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "peli.hh"
+#include <fstream>
 
-using std::cout;
+using std::cout, std::vector, std::cin;
 
 // Casual split func, if delim char is between "'s, ignores it.
 std::vector<std::string> split( const std::string& str, char delim = ';' )
@@ -66,8 +68,12 @@ std::vector<std::string> split( const std::string& str, char delim = ';' )
     return result;
 }
 
+
+
 int main()
 {
-    cout << "Testi\n";
+
+
+
     return EXIT_SUCCESS;
 }
