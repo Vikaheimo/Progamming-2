@@ -39,7 +39,7 @@
 #include "peli.hh"
 #include <fstream>
 
-using std::cout, std::vector, std::cin;
+using std::cout, std::map, std::cin, std::endl, std::vector;
 
 // Casual split func, if delim char is between "'s, ignores it.
 std::vector<std::string> split( const std::string& str, char delim = ';' )
@@ -68,11 +68,59 @@ std::vector<std::string> split( const std::string& str, char delim = ';' )
     return result;
 }
 
-
-
 int main()
 {
+    unsigned long int DATA_ALKIOT_RIVILLA = 3;
 
+    // Kysytään tiedoston nimeä
+    string tiedoston_nimi;
+    cout << "Give a name for input file: ";
+    cin >> tiedoston_nimi;
+
+    // Avataan tiedosto
+    std::ifstream tiedosto(tiedoston_nimi);
+
+    // Kokeillaan jos tiedostoa ei löydy
+    if (not tiedosto){
+        cout << "Error: File could not be read." << endl;
+        return EXIT_FAILURE;
+    }
+    // Luodaan map johon tallennetaan pelien tiedot
+    map<string, Peli> pelit;
+
+    vector<string> splitattu_rivi;
+    string rivi;
+    while (std::getline(tiedosto, rivi)){
+        splitattu_rivi = split(rivi);
+
+        if (splitattu_rivi.size() != DATA_ALKIOT_RIVILLA){
+
+            cout << "Error: Invalid format in file." << endl;
+            return EXIT_FAILURE;
+        }
+        // Jos tidot ovat oikeat tallennetaan ne muuttujiin
+        string pelin_nimi = splitattu_rivi.at(0);
+        string pelaajan_nimi = splitattu_rivi.at(1);
+        int pisteet = stoi(splitattu_rivi.at(2));
+
+        // Käydään läpi map ja etsitään pelin nimi pelit mapista
+        map<string, Peli>::iterator nimien_lapikaynti = pelit.find(pelin_nimi);
+        // jos löytyy niin lisätään pelaaja peli objektiin
+        if (nimien_lapikaynti != pelit.end()){
+            pelit.at(pelin_nimi).add_player(pelaajan_nimi, pisteet);
+
+        } else {
+            // jos peliä ei ole vielä luotu, niin luodaan se mappiin
+            pelit.insert({pelin_nimi, Peli(pelaajan_nimi)});
+
+            // lisätään pelaaja uuteen peliin
+            pelit.at(pelin_nimi).add_player(pelaajan_nimi, pisteet);
+        }
+
+    }
+    for (const auto a : pelit){
+        cout << a.first << endl;
+    }
 
 
     return EXIT_SUCCESS;

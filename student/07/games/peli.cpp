@@ -28,7 +28,17 @@ bool Peli::remove_player(string pelaajan_nimi){
 }
 
 void Peli::add_player(std::string pelaajan_nimi, int pisteet){
-    pelaajat_.at(pelaajan_nimi) = pisteet;
+    // ludoaan iteraattori joka käy läpi mapin arvot ja tarkistaa löytyyköö
+    // pelaajaa jo siitä
+    map<string, int>::iterator nimien_lapikaynti = pelaajat_.find(pelaajan_nimi);
+
+    // jos itertaattori on löytänyt nimen
+    if(nimien_lapikaynti != pelaajat_.end()){
+        nimien_lapikaynti->second = pisteet;
+    } else{
+        pelaajat_.insert({pelaajan_nimi, pisteet});
+    }
+
 
 }
 
