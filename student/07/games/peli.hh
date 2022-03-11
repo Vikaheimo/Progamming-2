@@ -13,7 +13,7 @@
 #include <map>
 #include <string>
 
-using std::string;
+using std::string, std::map;
 class Peli
 {
 public:
@@ -25,12 +25,12 @@ public:
 
     void add_player(string pelaajan_nimi, int pisteet);
 
-    std::map<string, int> get_pelaajien_pisteet();
+    map<string, int> get_pelaajien_pisteet();
 
     bool check_if_player_exists(string pelaajan_nimi);
 
 private:
-    std::map<string, int> pelaajat_;
+    map<string, int> pelaajat_;
 
     string pelin_nimi_;
 
