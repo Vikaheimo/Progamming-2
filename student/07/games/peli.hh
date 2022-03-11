@@ -25,7 +25,7 @@ public:
 
     void add_player(string pelaajan_nimi, int pisteet);
 
-    map<string, int> get_pelaajien_pisteet();
+    map<string, int> get_player_points();
 
     bool check_if_player_exists(string pelaajan_nimi);
 

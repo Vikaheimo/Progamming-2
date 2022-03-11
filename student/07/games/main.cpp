@@ -86,7 +86,7 @@ int main()
         return EXIT_FAILURE;
     }
     // Luodaan map johon tallennetaan pelien tiedot
-    map<string, Peli> pelit;
+    map<string, Peli*> pelit;
 
     vector<string> splitattu_rivi;
     string rivi;
@@ -104,22 +104,27 @@ int main()
         int pisteet = stoi(splitattu_rivi.at(2));
 
         // Käydään läpi map ja etsitään pelin nimi pelit mapista
-        map<string, Peli>::iterator nimien_lapikaynti = pelit.find(pelin_nimi);
-        // jos löytyy niin lisätään pelaaja peli objektiin
-        if (nimien_lapikaynti != pelit.end()){
-            pelit.at(pelin_nimi).add_player(pelaajan_nimi, pisteet);
+        map<string, Peli*>::iterator pelin_nimien_lapikaynti = pelit.find(pelin_nimi);
 
-        } else {
-            // jos peliä ei ole vielä luotu, niin luodaan se mappiin
-            pelit.insert({pelin_nimi, Peli(pelaajan_nimi)});
+        // jos peliä ei vilä löydy, niin tallennetaan se pelit mappiin
+        if (pelin_nimien_lapikaynti == pelit.end()){
+            pelit.insert({pelin_nimi, new Peli(pelin_nimi)});
 
-            // lisätään pelaaja uuteen peliin
-            pelit.at(pelin_nimi).add_player(pelaajan_nimi, pisteet);
         }
-
+        // lisätään pelaaja pelit mappiin oikean pelin alle
+            pelit.at(pelin_nimi) -> add_player(pelaajan_nimi, pisteet);
     }
+
+    // testausta
     for (const auto a : pelit){
         cout << a.first << endl;
+        Peli* b = a.second;
+        map<string, int> c = b -> get_player_points();
+        for (const auto d : c){
+            cout << d.first << " - " << d.second << endl;
+        }
+        cout << "_________" << endl;
+        
     }
 
 

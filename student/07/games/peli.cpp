@@ -6,7 +6,7 @@
  *      get_game_name = palauttaa pelin / olion nimen
  *      remove_player = poistaa pelaajan mapista
  *      add_player = lisää pelaajan tai muokaa pelaajaa mapissa
- *      get_pelaajien_pisteet = palauttaa pelaajien nimet ja pisteet
+ *      get_player_points = palauttaa pelaajien nimet ja pisteet
  *      check_if_player_exists = palauttaa löytyykö pelaajaa pelistä
  *
  *  Tekijä:
@@ -78,7 +78,7 @@ void Peli::add_player(std::string pelaajan_nimi, int pisteet){
 /*
 * Metodi joka palauttaa pelaajien nimet ja pistetilanteet mappina
 **/
-map<string, int> Peli::get_pelaajien_pisteet(){
+map <string, int> Peli::get_player_points(){
     return pelaajat_;
 }
 
