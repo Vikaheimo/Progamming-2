@@ -67,6 +67,50 @@ std::vector<std::string> split( const std::string& str, char delim = ';' )
     }
     return result;
 }
+void commands_loop(map<string, Peli*> pelit){
+    while (true){
+        string komento;
+        cout << "games> ";
+        std::getline(cin, komento);
+        
+        vector<string> komento_osissa = split(komento);
+
+        if (komento_osissa.size() >  1){
+            cout << "Error: Invalid input." << endl;
+            
+        } else if (komento_osissa[0] == "QUIT"){
+            return;
+
+        } else if(komento_osissa[0] == "ALL_GAMES"){
+            continue;
+            
+        } else if(komento_osissa[0] == "GAME"){
+            continue;
+            
+        } else if(komento_osissa[0] == "ALL_PLAYERS"){
+            continue;
+
+        } else if(komento_osissa[0] == "PLAYER"){
+            continue;
+            
+        } else if(komento_osissa[0] == "ADD_GAME"){
+            continue;
+            
+        } else if(komento_osissa[0] == "ADD_PLAYER"){
+            continue;
+            
+        } else if(komento_osissa[0] == "REMOVE"){
+            continue;
+            
+        } else {
+            cout << "Error: Invalid input." << endl;
+            
+        }
+        
+       
+    }
+}
+
 
 int main()
 {
@@ -75,7 +119,7 @@ int main()
     // Kysytään tiedoston nimeä
     string tiedoston_nimi;
     cout << "Give a name for input file: ";
-    cin >> tiedoston_nimi;
+    std::getline(cin, tiedoston_nimi);
 
     // Avataan tiedosto
     std::ifstream tiedosto(tiedoston_nimi);
@@ -114,19 +158,6 @@ int main()
         // lisätään pelaaja pelit mappiin oikean pelin alle
             pelit.at(pelin_nimi) -> add_player(pelaajan_nimi, pisteet);
     }
-
-    // testausta
-    for (const auto a : pelit){
-        cout << a.first << endl;
-        Peli* b = a.second;
-        map<string, int> c = b -> get_player_points();
-        for (const auto d : c){
-            cout << d.first << " - " << d.second << endl;
-        }
-        cout << "_________" << endl;
-        
-    }
-
-
+    commands_loop(pelit);
     return EXIT_SUCCESS;
 }
