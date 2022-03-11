@@ -24,17 +24,11 @@ using std::string, std::map, std::iterator;
 /*
 * Luokan konstruktori, joka ottaa argumenttinä pelin nimen, ja tallentaa sen
 **/
-Peli::Peli(string pelin_nimi):
-    pelin_nimi_(pelin_nimi){
+Peli::Peli()
+    {
 
 }
 
-/*
-* Metodi joka palauttaa pelin nimen
-**/
-string Peli::get_game_name(){
-    return pelin_nimi_;
-}
 
 /*
 * Metodi jolla voidaan poistaa pelaaja pelistä, jolloin palautetaan true. Jos pelaajaa

@@ -152,7 +152,7 @@ int main()
 
         // jos peliä ei vilä löydy, niin tallennetaan se pelit mappiin
         if (pelin_nimien_lapikaynti == pelit.end()){
-            pelit.insert({pelin_nimi, new Peli(pelin_nimi)});
+            pelit.insert({pelin_nimi, new Peli()});
 
         }
         // lisätään pelaaja pelit mappiin oikean pelin alle

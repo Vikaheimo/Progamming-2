@@ -17,7 +17,7 @@ using std::string, std::map;
 class Peli
 {
 public:
-    Peli(string pelin_nimi);
+    Peli();
 
     string get_game_name();
 
