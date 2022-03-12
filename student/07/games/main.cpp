@@ -71,7 +71,8 @@ std::vector<std::string> split( const std::string& str, char delim = ';' )
 }
 
 
-/* Funtio joka lajittelee mapin sen valueiden mukaan, ja palauttaa sen multimappina
+/* Funtio joka lajittelee mapin sen valueiden mukaan, 
+ * ja palauttaa sen mappina
  * */
 map<int, string> sort_map_by_values(map<string, int> map_to_sort){
     string monta_arvoa = ", ";
@@ -100,7 +101,9 @@ vector<string> return_all_games(const map<string, Peli*> pelit){
 
     // luodoaan iteraattori ja iteroidaan pelien nimien läpi
     map<string, Peli*>::const_iterator nimien_lapi;
-    for (nimien_lapi = pelit.begin(); nimien_lapi != pelit.end(); nimien_lapi++){
+    
+    for (nimien_lapi = pelit.begin();
+     nimien_lapi != pelit.end(); nimien_lapi++){
         
         // lisätään vektoriin uusi arvo
         return_vector.push_back(nimien_lapi ->first);
@@ -192,7 +195,10 @@ void commands_loop(map<string, Peli*>& pelit){
 
         // komento löytyy ensimmäisenä
         string komento = komento_osissa.at(0);
-        std::transform(komento.begin(), komento.end(), komento.begin(), ::toupper);
+
+        // muokataan komento isoille kirjaimille
+        std::transform(komento.begin(), 
+        komento.end(), komento.begin(), ::toupper);
 
         // pitkä if - else if osio komennon käsittelyyn
         if (komento == "QUIT"){
@@ -219,6 +225,11 @@ void commands_loop(map<string, Peli*>& pelit){
                 // tarkistetaan löytyykö peliä, jos ei niin tulostetaan
                 // virheilmoitus
                 if (is_game_existing(pelit, pelin_nimi)){
+
+                    cout << "Game " << pelin_nimi
+                    << " has these scores and players, 
+                    listed in ascending order:" << endl;
+
                     print_game_status(pelit, pelin_nimi);
 
                 } else{
@@ -229,6 +240,8 @@ void commands_loop(map<string, Peli*>& pelit){
             }
             
         } else if(komento == "ALL_PLAYERS"){
+            cout << "All players in alphabetical order:" << endl;
+
             std::set kaikki_nimet  = return_all_player_names(pelit);
 
             // käydään kaikki pelaajat läpi, ja tulostetaan ne yksi kerrallaan
@@ -249,6 +262,9 @@ void commands_loop(map<string, Peli*>& pelit){
                 if (games.size() == TYHJA_VEKTORI){
                     cout << "Error: Player could not be found." << endl;
                 } else {
+                    cout << "Player " << pelaajan_nimi 
+                    << " playes the following games:" << endl;
+
                     // käydään vektori läpi ja tulostetaan pelit kerrallaan
                     for (string& game : games){
                         cout << game << endl;
