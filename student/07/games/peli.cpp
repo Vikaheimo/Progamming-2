@@ -55,7 +55,7 @@ bool Peli::remove_player(string pelaajan_nimi){
 **/
 void Peli::add_player(std::string pelaajan_nimi, int pisteet){
 
-    // tutkitaan jos pelaaja on jo mapissa
+    // tutkitaan onko pelaaja mapissa
     if(check_if_player_exists(pelaajan_nimi)){
         // jos pelaaja on jo määrielty niin muokataan sen pistemäärä
         pelaajat_.at(pelaajan_nimi) = pisteet;
@@ -81,10 +81,10 @@ map <string, int> Peli::get_player_points(){
 **/
 bool Peli::check_if_player_exists(string pelaajan_nimi){
     // ludoaan iteraattori joka käy läpi mapin arvot ja tarkistaa löytyyköö pelaajaa
-    map<string, int>::iterator nimien_lapikaynti = pelaajat_.find(pelaajan_nimi);
+    map<string, int>::iterator nimi_iterator = pelaajat_.find(pelaajan_nimi);
 
    // jos pelaaja on olemassa
-    if(nimien_lapikaynti != pelaajat_.end()){
+    if(nimi_iterator != pelaajat_.end()){
         return true;
 
     } else{

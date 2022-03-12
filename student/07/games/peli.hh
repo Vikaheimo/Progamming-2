@@ -1,6 +1,13 @@
 /*  COMP.CS.100 Project 2: GAME STATISTICS
  *  Kuvaus:
  *      Luokka pelien tietojen käsittelyyn.
+ *  
+ *  Metodit:
+ *      get_game_name = palauttaa pelin / olion nimen
+ *      remove_player = poistaa pelaajan mapista
+ *      add_player = lisää pelaajan tai muokaa pelaajaa mapissa
+ *      get_player_points = palauttaa pelaajien nimet ja pisteet
+ *      check_if_player_exists = palauttaa löytyykö pelaajaa pelistä
  *
  *  Tekijä:
  *      Nimi: Vili Ikäheimo
