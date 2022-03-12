@@ -39,6 +39,7 @@
 #include "peli.hh"
 #include <fstream>
 #include <set>
+#include <algorithm>
 
 using std::cout, std::map, std::cin, std::endl, std::vector;
 
@@ -185,11 +186,13 @@ void commands_loop(map<string, Peli*>& pelit){
         int parametrien_maara = komento_osissa.size() - 1;
 
         if (parametrien_maara < MIN_PARAMETRIEN_MAARA){
-            cout << "Error: Invalid input.1" << endl;
+            cout << "Error: Invalid input." << endl;
             continue;
         } else if (parametrien_maara){}
+
         // komento löytyy ensimmäisenä
         string komento = komento_osissa.at(0);
+        std::transform(komento.begin(), komento.end(), komento.begin(), ::toupper);
 
         // pitkä if - else if osio komennon käsittelyyn
         if (komento == "QUIT"){
@@ -327,7 +330,7 @@ void commands_loop(map<string, Peli*>& pelit){
             }
         }
         // jos komenolla on liian vähän parametrejä
-        cout << "Error: Invalid input.2" << endl;
+        cout << "Error: Invalid input." << endl;
 
     }
 }
