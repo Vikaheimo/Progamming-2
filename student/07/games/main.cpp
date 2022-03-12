@@ -85,6 +85,7 @@ map<int, string> sort_map_by_values(map<string, int> map_to_sort){
         if (sorted_map.count(pistetilanne)){
             sorted_map.at(pistetilanne) += monta_arvoa + pelaajan_nimi;
         } else {
+            // lisätään mappiin uusi arvo
             sorted_map.insert(std::make_pair(pistetilanne, pelaajan_nimi));
         }
     }
@@ -94,15 +95,17 @@ map<int, string> sort_map_by_values(map<string, int> map_to_sort){
 /* Funtio joka käy mapin läpi ja palauttaa sen avainten arvot vektorissa.
  * */
 vector<string> return_all_games(const map<string, Peli*> pelit){
-    vector<string> return_value;
+    vector<string> return_vector;
 
     // luodoaan iteraattori ja iteroidaan pelien nimien läpi
     map<string, Peli*>::const_iterator nimien_lapi;
     for (nimien_lapi = pelit.begin(); nimien_lapi != pelit.end(); nimien_lapi++){
-        return_value.push_back(nimien_lapi ->first);
+        
+        // lisätään vektoriin uusi arvo
+        return_vector.push_back(nimien_lapi ->first);
     }
 
-    return return_value;
+    return return_vector;
 }
 
 /* Funtio joka käy mapin läpi ja palauttaa löytyykö siitä tiettyä peliä
@@ -148,14 +151,27 @@ std::set<string> return_all_player_names(map<string, Peli*> pelit){
     return nimet;
 }
 
+/* Funtio jolla saadaan tietyn pelaajan kaikki pelit takaisin vektorina
+ * */
+vector<string> get_player_games(map<string, Peli*> all_games, string player_name){
+    vector<string> player_games;
+    for (auto& game : all_games){
+        if(game.second ->check_if_player_exists(player_name)){
+            player_games.push_back(game.first);
+        }
+    }
+    return player_games;
+}
+
 /* Funtio jossa ohjelman komento-osuus pyörii. Kysyy joka kerta komentoa
  * ja sen parametrejä, tulostaa "Invalid input" jos syötteessä on jotkin
  * pielessä. Muuten suorittaa annetun komennon.
  * */
-void commands_loop(map<string, Peli*> pelit){
+void commands_loop(map<string, Peli*>& pelit){
     // alustetaan muuttujat
     string komento_ja_parametrit;
     const int MIN_PARAMETRIEN_MAARA = 0;
+    const int TYHJA_VEKTORI = 0;
 
     while (true){
         cout << "games> ";
@@ -209,16 +225,50 @@ void commands_loop(map<string, Peli*> pelit){
             
         } else if(komento == "ALL_PLAYERS"){
             std::set kaikki_nimet  = return_all_player_names(pelit);
+
+            // käydään kaikki pelaajat läpi, ja tulostetaan ne yksi kerrallaan
             for (auto& nimi : kaikki_nimet){
                 cout << nimi << endl;
             }
             continue;
 
         } else if(komento == "PLAYER"){
+            if (parametrien_maara >= 1){
 
+                // hankitaan komennon ainoa parametri
+                string pelaajan_nimi = komento_osissa.at(1);
+
+                vector<string> games = get_player_games(pelit, pelaajan_nimi);
+                
+                if (games.size() == TYHJA_VEKTORI){
+                    cout << "Error: Player could not be found." << endl;
+                } else {
+                    // käydään vektori läpi ja tulostetaan pelit kerrallaan
+                    for (string& game : games){
+                        cout << game << endl;
+                    }
+                }
+                continue;
+            }
+            
             
         } else if(komento == "ADD_GAME"){
-            continue;
+            if (parametrien_maara >= 1){
+
+                // hankitaan komennon ainoa parametri
+                string pelin_nimi = komento_osissa.at(1);
+
+                // kokeillaan onko peliä jo olemassa 
+                if (is_game_existing(pelit, pelin_nimi)){
+                    cout << "Error: Already exists." << endl;
+
+                } else{
+                    // luodaan uusi peli anneutlla nimellä
+                    pelit.insert(std::make_pair(pelin_nimi, new Peli));
+                    cout << "Game was added." << endl;
+                }
+                continue;
+            }
             
         } else if(komento == "ADD_PLAYER"){
             continue;
