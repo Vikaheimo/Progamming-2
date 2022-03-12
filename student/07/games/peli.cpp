@@ -22,11 +22,10 @@
 using std::string, std::map, std::iterator;
 
 /*
-* Luokan konstruktori, joka ottaa argumenttinä pelin nimen, ja tallentaa sen
+* Luodaan tyhjä konstruktori
 **/
 Peli::Peli()
     {
-
 }
 
 
