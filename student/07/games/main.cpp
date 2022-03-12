@@ -226,9 +226,9 @@ void commands_loop(map<string, Peli*>& pelit){
                 // virheilmoitus
                 if (is_game_existing(pelit, pelin_nimi)){
 
-                    cout << "Game " << pelin_nimi
-                    << " has these scores and players, 
-                    listed in ascending order:" << endl;
+                    cout << "Game " << pelin_nimi;
+                    cout << " has these scores and players";
+                    cout << ", listed in ascending order:" << endl;
 
                     print_game_status(pelit, pelin_nimi);
 
