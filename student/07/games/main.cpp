@@ -38,6 +38,7 @@
 #include <vector>
 #include "peli.hh"
 #include <fstream>
+#include <set>
 
 using std::cout, std::map, std::cin, std::endl, std::vector;
 
@@ -73,9 +74,10 @@ std::vector<std::string> split( const std::string& str, char delim = ';' )
  * */
 map<int, string> sort_map_by_values(map<string, int> map_to_sort){
     string monta_arvoa = ", ";
-    // luodaan multimap, jotta voidaan tallentaa saman pisteen omaavat pelaajat
+
+    // luodaan map, jotta voidaan tallentaa saman pisteen omaavat pelaajat
     map<int, string> sorted_map;
-    for(auto pair_data : map_to_sort){
+    for(auto& pair_data : map_to_sort){
         int pistetilanne = pair_data.second;
         string pelaajan_nimi = pair_data.first;
 
@@ -119,11 +121,31 @@ void print_game_status(map<string, Peli*> pelit, string pelin_nimi){
     map<int, string> pistetilanne_sorted= sort_map_by_values(pistetilanne);
 
     // käydään mapin läpi ja tulostetaan sen tiedot
-    for (auto pelaajan_tiedot : pistetilanne_sorted){
+    for (auto& pelaajan_tiedot : pistetilanne_sorted){
         cout << pelaajan_tiedot.first << " : " <<
                 pelaajan_tiedot.second << endl;
     }
 
+}
+
+/* Funtio jolla saadaan mapin avaimista set
+ * */
+std::set<string> map_keys_to_set(map<string, int> input_map){
+    std::set<string> return_set;
+    for(auto& map_data : input_map){
+        return_set.insert(map_data.first);
+    }
+    return return_set;
+}
+/* Funtio joka tulostaa pelaajat pistetilanteen mukaisessa järjestyksessä
+ * */
+std::set<string> return_all_player_names(map<string, Peli*> pelit){
+    std::set<string> nimet;
+    for (auto& peli : pelit){
+        map<string, int> pelin_kaikki_tieto = peli.second ->get_player_points();
+        nimet.merge(map_keys_to_set(pelin_kaikki_tieto));
+    }
+    return nimet;
 }
 
 /* Funtio jossa ohjelman komento-osuus pyörii. Kysyy joka kerta komentoa
@@ -186,6 +208,10 @@ void commands_loop(map<string, Peli*> pelit){
             }
             
         } else if(komento == "ALL_PLAYERS"){
+            std::set kaikki_nimet  = return_all_player_names(pelit);
+            for (auto& nimi : kaikki_nimet){
+                cout << nimi << endl;
+            }
             continue;
 
         } else if(komento == "PLAYER"){
