@@ -67,54 +67,150 @@ std::vector<std::string> split( const std::string& str, char delim = ';' )
     }
     return result;
 }
-void commands_loop(map<string, Peli*> pelit){
-    while (true){
-        string komento;
-        cout << "games> ";
-        std::getline(cin, komento);
-        
-        vector<string> komento_osissa = split(komento);
 
-        if (komento_osissa.size() >  1){
-            cout << "Error: Invalid input." << endl;
-            
-        } else if (komento_osissa[0] == "QUIT"){
+
+/* Funtio joka lajittelee mapin sen valueiden mukaan, ja palauttaa sen multimappina
+ * */
+map<int, string> sort_map_by_values(map<string, int> map_to_sort){
+    string monta_arvoa = ", ";
+    // luodaan multimap, jotta voidaan tallentaa saman pisteen omaavat pelaajat
+    map<int, string> sorted_map;
+    for(auto pair_data : map_to_sort){
+        int pistetilanne = pair_data.second;
+        string pelaajan_nimi = pair_data.first;
+
+        // tarkistetaan onko mapin avaimena jo haluttua arvoa
+        if (sorted_map.count(pistetilanne)){
+            sorted_map.at(pistetilanne) += monta_arvoa + pelaajan_nimi;
+        } else {
+            sorted_map.insert(std::make_pair(pistetilanne, pelaajan_nimi));
+        }
+    }
+    return sorted_map;
+}
+
+/* Funtio joka käy mapin läpi ja palauttaa sen avainten arvot vektorissa.
+ * */
+vector<string> return_all_games(const map<string, Peli*> pelit){
+    vector<string> return_value;
+
+    // luodoaan iteraattori ja iteroidaan pelien nimien läpi
+    map<string, Peli*>::const_iterator nimien_lapi;
+    for (nimien_lapi = pelit.begin(); nimien_lapi != pelit.end(); nimien_lapi++){
+        return_value.push_back(nimien_lapi ->first);
+    }
+
+    return return_value;
+}
+
+/* Funtio joka käy mapin läpi ja palauttaa löytyykö siitä tiettyä peliä
+ * */
+bool is_game_existing(const map<string, Peli*> pelit, string pelin_nimi){
+    // ludoaan iteraattori joka käy peli mapin läpi ja etsi pelin nimen siitä
+    map<string, Peli*>::const_iterator nimen_etsija = pelit.find(pelin_nimi);
+    return nimen_etsija != pelit.end();
+}
+/* Funtio joka tulostaa pelaajat pistetilanteen mukaisessa järjestyksessä
+ * */
+void print_game_status(map<string, Peli*> pelit, string pelin_nimi){
+
+    // tallennetaan halutun pelin pistetilanne ja lajitelaan se arvojen mukaan
+    map<string, int> pistetilanne = pelit.at(pelin_nimi) ->get_player_points();
+    map<int, string> pistetilanne_sorted= sort_map_by_values(pistetilanne);
+
+    // käydään mapin läpi ja tulostetaan sen tiedot
+    for (auto pelaajan_tiedot : pistetilanne_sorted){
+        cout << pelaajan_tiedot.first << " : " <<
+                pelaajan_tiedot.second << endl;
+    }
+
+}
+
+/* Funtio jossa ohjelman komento-osuus pyörii. Kysyy joka kerta komentoa
+ * ja sen parametrejä, tulostaa "Invalid input" jos syötteessä on jotkin
+ * pielessä. Muuten suorittaa annetun komennon.
+ * */
+void commands_loop(map<string, Peli*> pelit){
+    // alustetaan muuttujat
+    string komento_ja_parametrit;
+    const int MIN_PARAMETRIEN_MAARA = 0;
+
+    while (true){
+        cout << "games> ";
+
+        // tallennetetaan komento ja sen sen parametrit
+        std::getline(cin, komento_ja_parametrit);
+        vector<string> komento_osissa = split(komento_ja_parametrit, ' ');
+
+        // argumenttien määrä on yhden pienempää kuin
+        // koko komento jaettuna osiin
+        int parametrien_maara = komento_osissa.size() - 1;
+
+        if (parametrien_maara < MIN_PARAMETRIEN_MAARA){
+            cout << "Error: Invalid input.1" << endl;
+            continue;
+        } else if (parametrien_maara){}
+        // komento löytyy ensimmäisenä
+        string komento = komento_osissa.at(0);
+
+        // pitkä if - else if osio komennon käsittelyyn
+        if (komento == "QUIT"){
             return;
 
-        } else if(komento_osissa[0] == "ALL_GAMES"){
+        } else if(komento == "ALL_GAMES"){
+            cout << "All games in alphabetical order:" << endl;
+
+            // tallenetaan pelit vektoriin
+            vector<string> kaikki_pelit = return_all_games(pelit);
+
+            for(const string &pelin_nimi : kaikki_pelit){
+                cout << pelin_nimi << endl;
+            }
             continue;
             
-        } else if(komento_osissa[0] == "GAME"){
-            continue;
+        } else if(komento == "GAME"){
+            if (parametrien_maara >= 1){
+
+                // hankitaan komennon ainoa parametri
+                string pelin_nimi = komento_osissa.at(1);
+
+                // tarkistetaan löytyykö peliä, jos ei niin tulostetaan
+                // virheilmoitus
+                if (is_game_existing(pelit, pelin_nimi)){
+                    print_game_status(pelit, pelin_nimi);
+
+                } else{
+                    cout << "Error: Game could not be found." << endl;
+                }
+                continue;
+            }
             
-        } else if(komento_osissa[0] == "ALL_PLAYERS"){
+        } else if(komento == "ALL_PLAYERS"){
             continue;
 
-        } else if(komento_osissa[0] == "PLAYER"){
+        } else if(komento == "PLAYER"){
+
+            
+        } else if(komento == "ADD_GAME"){
             continue;
             
-        } else if(komento_osissa[0] == "ADD_GAME"){
+        } else if(komento == "ADD_PLAYER"){
             continue;
             
-        } else if(komento_osissa[0] == "ADD_PLAYER"){
+        } else if(komento == "REMOVE"){
             continue;
-            
-        } else if(komento_osissa[0] == "REMOVE"){
-            continue;
-            
-        } else {
-            cout << "Error: Invalid input." << endl;
             
         }
-        
-       
+        // jos komenolla on liian vähän parametrejä
+        cout << "Error: Invalid input.2" << endl;
+
     }
 }
 
 
 int main()
 {
-    unsigned long int DATA_ALKIOT_RIVILLA = 3;
+    const unsigned long int DATA_ALKIOT_RIVILLA = 3;
 
     // Kysytään tiedoston nimeä
     string tiedoston_nimi;
