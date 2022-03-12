@@ -333,8 +333,7 @@ void commands_loop(map<string, Peli*>& pelit){
 }
 
 
-int main()
-{
+int main(){
     const unsigned long int DATA_ALKIOT_RIVILLA = 3;
 
     // Kysytään tiedoston nimeä
@@ -358,8 +357,10 @@ int main()
     while (std::getline(tiedosto, rivi)){
         splitattu_rivi = split(rivi);
 
+        // tutkitaan onko tiedoston sislätämä data oikeanlaista
         if (splitattu_rivi.size() != DATA_ALKIOT_RIVILLA){
-
+            // suljetaan tiedosto ja tulostetaan virheilmoitus
+            tiedosto.close();
             cout << "Error: Invalid format in file." << endl;
             return EXIT_FAILURE;
         }
@@ -379,6 +380,9 @@ int main()
         // lisätään pelaaja pelit mappiin oikean pelin alle
             pelit.at(pelin_nimi) -> add_player(pelaajan_nimi, pisteet);
     }
+
+    // suljetaan tiedosto ja avataan ohjelman command loop
+    tiedosto.close();
     commands_loop(pelit);
     return EXIT_SUCCESS;
 }
