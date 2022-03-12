@@ -204,6 +204,7 @@ void commands_loop(map<string, Peli*>& pelit){
             for(const string &pelin_nimi : kaikki_pelit){
                 cout << pelin_nimi << endl;
             }
+            // ohitetaan viimeinen print, koska tarpeeksi parametreja
             continue;
             
         } else if(komento == "GAME"){
@@ -220,6 +221,7 @@ void commands_loop(map<string, Peli*>& pelit){
                 } else{
                     cout << "Error: Game could not be found." << endl;
                 }
+                // ohitetaan viimeinen print, koska tarpeeksi parametreja
                 continue;
             }
             
@@ -230,6 +232,7 @@ void commands_loop(map<string, Peli*>& pelit){
             for (auto& nimi : kaikki_nimet){
                 cout << nimi << endl;
             }
+            // ohitetaan viimeinen print, koska tarpeeksi parametreja
             continue;
 
         } else if(komento == "PLAYER"){
@@ -248,6 +251,7 @@ void commands_loop(map<string, Peli*>& pelit){
                         cout << game << endl;
                     }
                 }
+                // ohitetaan viimeinen print, koska tarpeeksi parametreja
                 continue;
             }
             
@@ -267,15 +271,60 @@ void commands_loop(map<string, Peli*>& pelit){
                     pelit.insert(std::make_pair(pelin_nimi, new Peli));
                     cout << "Game was added." << endl;
                 }
+                // ohitetaan viimeinen print, koska tarpeeksi parametreja
                 continue;
             }
             
         } else if(komento == "ADD_PLAYER"){
-            continue;
+            if (parametrien_maara >= 3){
+
+                // tallenetaan parametrit muuttujiin
+                string pelin_nimi = komento_osissa.at(1);
+                string pelaajan_nimi = komento_osissa.at(2);
+                int pisteet = stoi(komento_osissa.at(3));
+                
+                // tutkitaan löytyykö peliä listasta
+                if (is_game_existing(pelit, pelin_nimi)){
+
+                    // tallennetaan uusi pelaaja luokkaan
+                    pelit.at(pelin_nimi) -> add_player(pelaajan_nimi, pisteet);
+
+                    cout << "Player was added." << endl;
+
+                } else{
+                    // jos peliä ei löydy, niin tulostetaan virheilmoitus
+                    cout << "Error: Game could not be found." << endl;
+                }
+
+                // ohitetaan viimeinen print, koska tarpeeksi parametreja
+                continue;
+            }
             
         } else if(komento == "REMOVE"){
-            continue;
-            
+            if (parametrien_maara >= 1){
+                
+                //tallennetaan parametri muuttujaan
+                string pelaajan_nimi = komento_osissa.at(1);
+                
+                // tallennetaan kaikki pelaajat set:iin
+                std::set<string> kaikki_pelaajat = return_all_player_names(pelit);
+
+                // kokeillaan onko pelaaja olemassa
+                if (kaikki_pelaajat.count(pelaajan_nimi)){
+                    // käydään kaikki pelit läpi ja poisteaan kaista haluttu pelaaja
+                    for (auto& peli : pelit){
+                        peli.second -> remove_player(pelaajan_nimi);
+                    }
+                    // koska poistaminen onnistui tulostetaan ilmoitus käyttäjälle
+                    cout << "Player was removed from all games." << endl;
+
+                } else {
+                    // koska pelaajaa ei löytynyt, niin tulostetaan virheilmoitus
+                    cout << "Error: Player could not be found." << endl;
+                }
+                // ohitetaan viimeinen print, koska tarpeeksi parametreja
+                continue;
+            }
         }
         // jos komenolla on liian vähän parametrejä
         cout << "Error: Invalid input.2" << endl;
