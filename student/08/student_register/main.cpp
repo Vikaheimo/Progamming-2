@@ -98,10 +98,9 @@ void save_data_to_file(std::map< std::string, Student* > user_ids, std::string f
         file << sdata->student_number + ";"
             << sdata->name + ";"
             << sdata->phone_number + ";"
-            << sdata->email + ";";
-            if(sdata->skype != ""){
-                file << sdata->skype + ";";
-            }
+            << sdata->email + ";"
+            << sdata->skype;
+
             file << std::endl;
     }
 
