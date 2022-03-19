@@ -97,23 +97,25 @@ void save_data_to_file(std::map< std::string, Student* > user_ids, std::string f
         Student* sdata = p.second;
         file << sdata->student_number + ";"
             << sdata->name + ";"
-            << sdata->phone_number+ ";"
-            << sdata->email + ";"
-            << sdata->skype + ";"
-            << std::endl;
+            << sdata->phone_number + ";"
+            << sdata->email + ";";
+            if(sdata->skype != ""){
+                file << sdata->skype + ";";
+            }
+            file << std::endl;
     }
 
 }
-void change_number(Student *s){
+bool change_number(Student *s){
     std::cout << "Enter a new phone number: ";
     std::string new_number;
     std::getline(std::cin, new_number);
-
+    std::cout << std::endl;
     if (is_valid_phone_number(new_number)){
-
+        s->phone_number = new_number;
+        return true;
     }
-
-    s->phone_number = new_number;
+    return false;
 }
 
 
@@ -177,8 +179,10 @@ int main() {
                 std::cout << "There is no student with the given number!" << std::endl;
                 continue;
             }
-            change_number(student_numbers.at(student_number));
-            save_data_to_file(user_ids, file_name);
+            if (change_number(student_numbers.at(student_number))){
+                save_data_to_file(user_ids, file_name);
+                continue;
+            }
 
 
 
