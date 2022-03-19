@@ -96,6 +96,7 @@ void save_data_to_file(std::map< std::string, Student* > user_ids, std::string f
     for (auto p : user_ids){
         Student* sdata = p.second;
         file << sdata->student_number + ";"
+            << sdata->user_id + ";"
             << sdata->name + ";"
             << sdata->phone_number + ";"
             << sdata->email + ";"
