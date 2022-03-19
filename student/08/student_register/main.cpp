@@ -90,6 +90,32 @@ bool is_valid_phone_number(const std::string number) {
     return true;
 }
 
+void save_data_to_file(std::map< std::string, Student* > user_ids, std::string file_name){
+    std::ofstream file(file_name);
+
+    for (auto p : user_ids){
+        Student* sdata = p.second;
+        file << sdata->student_number + ";"
+            << sdata->name + ";"
+            << sdata->phone_number+ ";"
+            << sdata->email + ";"
+            << sdata->skype + ";"
+            << std::endl;
+    }
+
+}
+void change_number(Student *s){
+    std::cout << "Enter a new phone number: ";
+    std::string new_number;
+    std::getline(std::cin, new_number);
+
+    if (is_valid_phone_number(new_number)){
+
+    }
+
+    s->phone_number = new_number;
+}
+
 
 int main() {
     std::string file_name = "";
@@ -144,7 +170,16 @@ int main() {
                 std::cout << "Erroneous parameters!" << std::endl << HELP_TEXT;
                 continue;
             }
-            // TODO: Add functionality here
+            std::string student_number = parts.at(1);
+
+            std::map< std::string, Student* >::iterator it = student_numbers.find(student_number);
+            if (it == student_numbers.end()){
+                std::cout << "There is no student with the given number!" << std::endl;
+                continue;
+            }
+            change_number(student_numbers.at(student_number));
+            save_data_to_file(user_ids, file_name);
+
 
 
         } else if(command == "Q" or command == "q") {
