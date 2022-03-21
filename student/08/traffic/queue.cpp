@@ -42,10 +42,11 @@ void Queue::switch_light()
         how_many_passes_left_ = cycle_;
         is_green_ = true;
 
-        std::cout << "GREEN: ";
+        std::cout << "GREEN: Vehicle(s) ";
 
         if (first_ == nullptr){
             std::cout << "No vehicles waiting in traffic lights" << std::endl;
+            return;
         }
         while (how_many_passes_left_ != 0) {
             --how_many_passes_left_;
