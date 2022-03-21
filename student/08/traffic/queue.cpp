@@ -21,12 +21,14 @@ Queue::~Queue()
 void Queue::enqueue(const string &reg)
 {
     if (is_green_) {
-        if (how_many_passes_left_ == 1){
-            switch_light();
+        --how_many_passes_left_;
+        cout << "GREEN: The vehicle "<< reg <<" need not stop to wait" << endl;
+//        if (how_many_passes_left_ == 0){
+//           is_green_ = false;
+//           return;
+//        }
+//        --how_many_passes_left_;
 
-        } else {
-            how_many_passes_left_ -= 1;
-        }
 
     } else {
         add_car(reg);
@@ -35,29 +37,30 @@ void Queue::enqueue(const string &reg)
 
 void Queue::switch_light()
 {
-    if (is_green_){
+    if (is_green_){ // vaihtuu punaiseksi
         is_green_ = false;
+        std::cout << "RED: No vehicles waiting in traffic lights" << std::endl;
 
-    } else {
-        how_many_passes_left_ = cycle_;
+    } else { // vaihtuu vihreäksi
         is_green_ = true;
+        how_many_passes_left_ = cycle_;
 
-        std::cout << "GREEN: Vehicle(s) ";
+        std::cout << "GREEN: ";
 
         if (first_ == nullptr){
             std::cout << "No vehicles waiting in traffic lights" << std::endl;
             return;
         }
+        std::cout << "Vehicle(s) ";
         while (how_many_passes_left_ != 0) {
             --how_many_passes_left_;
             if (not dequeue()) {
                 break;
             }
         }
-        if (how_many_passes_left_ == 0){
-            is_green_ = false;
-        }
         cout << "can go on" << std::endl;
+        how_many_passes_left_ = 0;
+        is_green_ = false;
     }
 }
 
