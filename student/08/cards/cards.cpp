@@ -47,7 +47,9 @@ bool Cards::bottom_to_top()
 {
     if(top_ == nullptr){
         return false;
-    } else {
+    } else if (top_->next == nullptr){
+        return true;
+    }else {
         Card_data *last = top_;
         Card_data *second_last = top_;
         while (last->next != nullptr) {
@@ -65,6 +67,8 @@ bool Cards::top_to_bottom()
 {
     if(top_ == nullptr){
         return false;
+    } else if (top_->next == nullptr){
+        return true;
     } else {
         Card_data *last = top_;
         Card_data *new_bottom = top_;
