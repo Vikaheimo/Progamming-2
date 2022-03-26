@@ -9,6 +9,10 @@
 using namespace std;
 
 const string GREETING_AT_END = "Thanks and see you later!";
+const string ERROROUS_PARAMETER = "Error: wrong number of parameters.";
+const int PARAMETER_AMOUMT = 3;
+const string UNKOWN_COMMAND = "Error: unknown command.";
+const string NON_NUMBER = "Error: a non-number operand.";
 
 // Utility function to sections a string at delimiters
 vector< string > split(const string& s,
@@ -67,7 +71,7 @@ int main() {
     // Using precision of two decimals in printing
     cout.precision(2);
     cout << fixed;
-
+    bool is_found;
     while ( true ) {
         cout << "calculator> ";
 
@@ -94,15 +98,27 @@ int main() {
 
         for (auto &cmd : COMMANDS){
             if (command_to_be_executed == cmd.str){
-
+                is_found = true;
+                double num1, num2;
                 if (cmd.is_exit){
                     return EXIT_SUCCESS;
+                } else if (pieces.size() != PARAMETER_AMOUMT){
+                    cout << ERROROUS_PARAMETER << endl;
+                    break;
+                } else if (!string_to_double(pieces.at(1), num1) or !string_to_double(pieces.at(2), num2)){
+                    cout << NON_NUMBER << endl;
+                    break;
                 }
+
+
+                cout << cmd.action(num1, num2) << endl;
                 continue;
             }
         }
-
-        cout << "Error: unknown command." << endl;
+        if (not is_found){
+            cout << UNKOWN_COMMAND << endl;
+        }
+        is_found = false;
 
     }
     return EXIT_SUCCESS;
