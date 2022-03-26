@@ -61,6 +61,7 @@ const vector<Command> COMMANDS = {
     {"^", 2, false, exponentiation},
     {"POWER", 2, false, exponentiation},
     {"EXP", 2, false, exponentiation},
+    {"DIVIDE", 2, false, division},
     {"STOP", 0, true, nullptr},
     {"QUIT", 0, true, nullptr},
     {"EXIT", 0, true, nullptr},
