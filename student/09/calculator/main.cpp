@@ -4,6 +4,7 @@
 #include <sstream>  // for implementing function string_to_double
 #include <string>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -87,9 +88,24 @@ int main() {
 
         string command_to_be_executed = pieces.at(0);
 
-        // TODO: Implement command execution here!
+        std::for_each(command_to_be_executed.begin(), command_to_be_executed.end(), [](char & c){
+            c = ::toupper(c);
+        });
+
+        for (auto &cmd : COMMANDS){
+            if (command_to_be_executed == cmd.str){
+
+                if (cmd.is_exit){
+                    return EXIT_SUCCESS;
+                }
+                continue;
+            }
+        }
+
+        cout << "Error: unknown command." << endl;
 
     }
+    return EXIT_SUCCESS;
 }
 
 
