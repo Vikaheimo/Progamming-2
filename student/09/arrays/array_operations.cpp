@@ -33,10 +33,26 @@ int greatest_v2(int *itemptr, int *endptr)
 
 void copy(int *itemptr, int *endptr, int *targetptr)
 {
+    int* taulukko_osoitin = itemptr;
 
+    while(taulukko_osoitin != endptr){
+        *targetptr = *taulukko_osoitin;
+        targetptr++;
+        taulukko_osoitin++;
+
+    }
 }
 
 void reverse(int *leftptr, int *rightptr)
 {
+    rightptr --;
+    int temp;
+    while (leftptr < rightptr){
+        temp = *leftptr;
+        *leftptr = *rightptr;
+        *rightptr = temp;
 
+        leftptr++;
+        rightptr--;
+    }
 }
