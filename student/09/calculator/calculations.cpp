@@ -19,3 +19,13 @@ double multiplication(double left, double right) {
 double division(double left, double right) {
     return left / right;
 }
+
+
+double exponentiation(double left, double right)
+{
+    double ans = 1;
+    for (int i = 0; i < right; i++){
+        ans *= left;
+    }
+    return ans;
+}
