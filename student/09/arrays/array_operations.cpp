@@ -2,7 +2,7 @@
 
 int greatest_v1(int *itemptr, int size)
 {
-    int isoin_luku = 0;
+    int isoin_luku = *itemptr;
     int* taulukko_osoitin = itemptr;
     int kierrokset = 0;
     while(kierrokset != size){
@@ -18,7 +18,7 @@ int greatest_v1(int *itemptr, int size)
 
 int greatest_v2(int *itemptr, int *endptr)
 {
-    int isoin_luku = 0;
+    int isoin_luku = *itemptr;
     int* taulukko_osoitin = itemptr;
 
     while(taulukko_osoitin != endptr){
