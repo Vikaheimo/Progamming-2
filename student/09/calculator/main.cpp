@@ -98,18 +98,22 @@ int main() {
 
         for (auto &cmd : COMMANDS){
             if (command_to_be_executed == cmd.str){
+
                 is_found = true;
                 double num1, num2;
-                if (cmd.is_exit){
+
+                if (cmd.is_exit and pieces.size() == 1){
+                    cout << GREETING_AT_END << endl;
                     return EXIT_SUCCESS;
-                } else if (pieces.size() != PARAMETER_AMOUMT){
+
+                } if (pieces.size() != PARAMETER_AMOUMT){
                     cout << ERROROUS_PARAMETER << endl;
                     break;
+
                 } else if (!string_to_double(pieces.at(1), num1) or !string_to_double(pieces.at(2), num2)){
                     cout << NON_NUMBER << endl;
                     break;
                 }
-
 
                 cout << cmd.action(num1, num2) << endl;
                 continue;
