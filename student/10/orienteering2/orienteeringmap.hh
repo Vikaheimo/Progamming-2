@@ -24,6 +24,7 @@
 #include <vector>
 #include "point.hh"
 #include "route.hh"
+#include "iostream"
 
 class OrienteeringMap
 {
