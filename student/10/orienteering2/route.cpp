@@ -14,27 +14,26 @@
 */
 #include "route.hh"
 
+#include "iostream"
 
 Route::Route(std::string name):
 name_(name) {
 
     // set lenght of the route to zero, so that the value can
     // still be used
-    lenghtOfRoute_ = 0;
+    lengthOfRoute_ = 0;
 }
 
-bool Route::addPoint(Point* new_point)
+void Route::addPoint(Point* from, Point* to)
 {
-    // check if the point allready exists in the route
-    // and return false if it does
-    if (IsPoint(new_point)){
-        return false;
+    // check if the "from" point allready exists and add it
+    // if it doesn't
+    if(!IsPoint(from)){
+        route_.push_back(from);
     }
 
-    // add point to the route and return true
-    route_.push_back(new_point);
-    return true;
-
+    // add "to" point to the route
+    route_.push_back(to);
 }
 
 std::vector<std::string> Route::getPoints() const
@@ -52,14 +51,14 @@ std::vector<std::string> Route::getPoints() const
     return point_names;
 }
 
-int Route::getLength()
+double Route::getLength()
 {
     // check if the lenght of the route hasn't been calculated yet
-    if (lenghtOfRoute_ == 0){
+    if (lengthOfRoute_ == 0){
         CalculateLenght();
     }
 
-    return lenghtOfRoute_;
+    return lengthOfRoute_;
 }
 
 int Route::GreatestRise(Point *control_point) const
@@ -101,7 +100,6 @@ void Route::CalculateLenght()
     std::vector<int> last_coords = route_.front()->getCoordinates();
     double length = 0;
     for(auto& point : route_){
-
         // get current coordinates and their x and y coordinates
         std::vector<int> current_coords = point->getCoordinates();
         int current_x = current_coords.front();
@@ -119,9 +117,10 @@ void Route::CalculateLenght()
         length += std::sqrt((distance_x + distance_y));
 
         last_coords = current_coords;
+
     }
-    // update route lenght
-    lenghtOfRoute_ = length;
+    // update route length
+    lengthOfRoute_ = length;
 }
 
 bool Route::IsPoint(Point *control_point) const

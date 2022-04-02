@@ -29,13 +29,13 @@ public:
 
     // method that adds a control point to the end of the route
     // returns true if it was succesfull otherwise false
-    bool addPoint(Point* new_point);
+    void addPoint(Point* from,Point* to);
 
     // a method that returns the names of the control points in a route
     std::vector<std::string> getPoints() const;
 
     // a method that returns the lenght of the route
-    int getLength();
+    double getLength();
 
     // a method that returns the highest rise from a given point
     // if the point doesnt exist, returns -1 and if there is no rise
@@ -49,7 +49,7 @@ private:
     std::vector<Point*> route_;
 
     std::string name_;
-    double lenghtOfRoute_;
+    double lengthOfRoute_;
 
     // calculates the length of the route
     void CalculateLenght();

@@ -35,18 +35,23 @@ void OrienteeringMap::add_point(std::string name, int x, int y,
 bool OrienteeringMap::connect_route(std::string from,
                                     std::string to, std::string route_name)
 {
+    // check if both points exist
+    if (!IsPoint(from) or !IsPoint(to)){
+        return false;
+
     // if there is no route called route_name
-    if (!IsRoute(route_name)){
+    }else if (!IsRoute(route_name)){
 
         // makes a new route and stores it in the all routes map
         Route* new_route = new Route(route_name);
         allRoutes_.insert(std::make_pair(route_name, new_route));
     }
-    // tries to add a new point to the given route and stores the
-    // return value
-    bool value = allRoutes_.at(route_name)->addPoint(allPoints_.at(to));
 
-    return value;
+    // adds the points to the route
+    allRoutes_.at(route_name)->
+            addPoint(allPoints_.at(from), allPoints_.at(to));
+
+    return true;
 }
 
 void OrienteeringMap::print_map() const
@@ -141,7 +146,9 @@ bool OrienteeringMap::IsRoute(std::string route_name) const
 
 bool OrienteeringMap::IsPoint(std::string point_name) const
 {
+
     for (auto& route : allPoints_){
+
         if (route.first == point_name){
             return true;
         }
@@ -160,7 +167,7 @@ std::vector<std::string> OrienteeringMap::getHighestRise(
 
     for (auto& route : allRoutes_){
         int current_rise = route.second->GreatestRise(pointer_to_point);
-        std::cout << current_rise;
+
         // check if the current route has a higher rise
         if (current_rise> highest_rise){
 
