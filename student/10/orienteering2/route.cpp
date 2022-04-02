@@ -14,8 +14,6 @@
 */
 #include "route.hh"
 
-#include "iostream"
-
 Route::Route(std::string name):
 name_(name) {
 
@@ -84,7 +82,7 @@ int Route::GreatestRise(Point *control_point) const
             continue;
 
         // break out of the code if the height gets smaller
-        } else if (current_height > last_height) {
+        } else if (current_height < last_height) {
             break;
 
         }
