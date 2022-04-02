@@ -101,6 +101,31 @@ void OrienteeringMap::route_length(const std::string &name) const
 
 void OrienteeringMap::greatest_rise(const std::string &point_name) const
 {
+    const int no_rise = 0;
+    // check if the point doesn't exist
+    if (!IsPoint(point_name)){
+        std::cout << "Error: Route named "<< point_name <<" can't be found"
+                  << std::endl;
+        return;
+    }
+
+    // get highest rise
+    int highest_rise = 0;
+    std::vector<std::string> routes_with_highest_rise =
+            getHighestRise(highest_rise, point_name);
+
+    if(highest_rise == no_rise){
+        std::cout<< "No route rises after point " << point_name << std::endl;
+        return;
+    }
+    std::cout << "Greatest rise after point "
+              << point_name << ", "
+              << highest_rise <<" meters, is on route(s):"
+              << std::endl;
+
+    for (auto& route : routes_with_highest_rise){
+        std::cout << " - " << route << std::endl;
+    }
 
 }
 
@@ -112,4 +137,47 @@ bool OrienteeringMap::IsRoute(std::string route_name) const
         }
     }
     return false;
+}
+
+bool OrienteeringMap::IsPoint(std::string point_name) const
+{
+    for (auto& route : allPoints_){
+        if (route.first == point_name){
+            return true;
+        }
+    }
+    return false;
+}
+
+std::vector<std::string> OrienteeringMap::getHighestRise(
+        int &highest_rise, std::string point_name) const
+{
+    // a vector to save the routes with the highest rise
+    std::vector<std::string> routes_with_the_same_rise;
+
+    // save pointer to the control point
+    Point* pointer_to_point = allPoints_.at(point_name);
+
+    for (auto& route : allRoutes_){
+        int current_rise = route.second->GreatestRise(pointer_to_point);
+        std::cout << current_rise;
+        // check if the current route has a higher rise
+        if (current_rise> highest_rise){
+
+            //empty the vector
+            routes_with_the_same_rise.clear();
+
+            // add the new route the to the vector and store the
+            // highest rise
+            routes_with_the_same_rise.push_back(route.first);
+            highest_rise = current_rise;
+
+        } else if (current_rise == highest_rise){
+
+            // if some routes have the same highest rise, add them to the
+            // vector
+            routes_with_the_same_rise.push_back(route.first);
+        }
+    }
+    return routes_with_the_same_rise;
 }

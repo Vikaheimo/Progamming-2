@@ -83,9 +83,21 @@ private:
     int mapWidth;
     int mapHeight;
 
-    // Method that return true if a route allready exists, if it doesn't
+    // Method that return true if a route exists, if it doesn't
     // returns false.
     bool IsRoute(std::string route_name) const;
+
+    // Method that return true if a point exists, if it doesn't
+    // returns false.
+    bool IsPoint(std::string point_name) const;
+
+    // Method to find the highes rise after a given point. Returns
+    // a vector with the names of the routes with the highest rise and
+    // stores the highest rise in the parameter highest_rise.
+    std::vector<std::string> getHighestRise(
+            int& highest_rise, std::string point_name) const;
+
+
 };
 
 #endif // ORIENTEERINGMAP_HH
