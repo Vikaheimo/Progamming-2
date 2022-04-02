@@ -81,6 +81,10 @@ private:
     std::map<std::string, Route*> allRoutes_;
     int mapWidth;
     int mapHeight;
+
+    // Method that return true if a route allready exists, if it doesn't
+    // returns false.
+    bool IsRoute(std::string route_name) const;
 };
 
 #endif // ORIENTEERINGMAP_HH
