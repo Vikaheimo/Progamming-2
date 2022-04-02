@@ -12,7 +12,8 @@ OrienteeringMap::~OrienteeringMap()
 
 void OrienteeringMap::set_map_size(int width, int height)
 {
-
+    mapHeight = height;
+    mapWidth = width;
 }
 
 void OrienteeringMap::add_point(std::string name, int x, int y, int height, char marker)
