@@ -187,7 +187,7 @@ void OrienteeringMap::route_length(const std::string &name) const
     double length = allRoutes_.at(name)->getLength();
 
     std::cout<< std::setprecision(2)
-             << "Route " << name << " lenght was " << length <<std::endl;
+             << "Route " << name << " length was " << length <<std::endl;
 
 }
 
@@ -196,7 +196,7 @@ void OrienteeringMap::greatest_rise(const std::string &point_name) const
     const int no_rise = 0;
     // check if the point doesn't exist
     if (!IsPoint(point_name)){
-        std::cout << "Error: Route named "<< point_name <<" can't be found"
+        std::cout << "Error: Point named "<< point_name <<" can't be found"
                   << std::endl;
         return;
     }
