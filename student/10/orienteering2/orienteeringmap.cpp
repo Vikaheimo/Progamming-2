@@ -56,7 +56,64 @@ bool OrienteeringMap::connect_route(std::string from,
 
 void OrienteeringMap::print_map() const
 {
+    const int width_for_column_num = 3;
+    const int width_for_row_num = 2;
 
+    // print one extra space at the beginning
+    std::cout << " ";
+
+    int column_num = 1;
+
+    // while loop for the first print row
+    while (column_num <= mapWidth){
+
+        // get the lenght of the current number
+        int current_num_length = std::to_string(column_num).length();
+
+        // print the right amount of spaces and the column number after them
+        std::cout << std::string((width_for_column_num - current_num_length), ' ')
+                  << column_num;
+
+        column_num += 1;
+    }
+    // reset column number and row number
+    column_num = 1;
+    int row_num = 1;
+
+    std::cout << std::endl;
+
+    while (row_num<= mapHeight){
+        // get the lenght of the current row number
+        int current_num_length = std::to_string(row_num).length();
+
+        // print the right amount of spaces and the row number after them
+        std::cout << std::string((width_for_row_num - current_num_length), ' ')
+                  << row_num;
+
+        while (column_num <= mapWidth){
+
+            // add two spaces before every print
+            std::cout << "  ";
+
+            char marker;
+
+            //check if the current coordinates have a point
+            if (isPointCoord(column_num, row_num, marker)){
+                std::cout << marker;
+
+            // print . if no points are in the current coordinates
+            } else{
+                std::cout << ".";
+            }
+
+            column_num += 1;
+        }
+        std::cout << std::endl;
+
+        // add one to row num and reset column
+        column_num = 1;
+        row_num += 1;
+    }
 }
 
 void OrienteeringMap::print_routes() const
@@ -200,4 +257,22 @@ std::vector<std::string> OrienteeringMap::getHighestRise(
         }
     }
     return routes_with_the_same_rise;
+}
+
+bool OrienteeringMap::isPointCoord(int x, int y, char& marker) const
+{
+    for(const auto& point: allPoints_){
+        // store command point x and y coordinates
+        int point_x = point.second->getCoordinates().front();
+        int point_y = point.second->getCoordinates().back();
+
+
+        if (point_x == x and point_y == y){
+
+            // set points marker to marker
+            marker = point.second->getMarker();
+            return true;
+        }
+    }
+    return false;
 }

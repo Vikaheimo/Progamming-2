@@ -97,6 +97,12 @@ private:
     std::vector<std::string> getHighestRise(
             int& highest_rise, std::string point_name) const;
 
+    // Takes x and y coordinates as parameters and checks if a
+    // control point is at the given coordinates. Returns true if
+    // there is and puts the marker to the point into marker parameter.
+    // If there is no point in the coordinates, returns false.
+    bool isPointCoord(int x, int y, char& marker) const ;
+
 
 };
 
