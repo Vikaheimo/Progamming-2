@@ -61,12 +61,25 @@ void OrienteeringMap::print_map() const
 
 void OrienteeringMap::print_routes() const
 {
+    std::cout << "Routes:" << std::endl;
 
+    // loop trough routes map and print all the values on their
+    // own rows
+    for (const auto& route : allRoutes_){
+        std::cout << " - " << route.first << std::endl;
+    }
 }
 
 void OrienteeringMap::print_points() const
 {
+    std::cout << "Points:" << std::endl;
 
+    // loop trough points map and print all the values on their
+    // own rows
+    for (const auto& point : allPoints_){
+        std::cout << " - " << point.first << " : "
+                  << point.second->getMarker()<<std::endl;
+    }
 }
 
 void OrienteeringMap::print_route(const std::string &name) const
@@ -80,7 +93,7 @@ void OrienteeringMap::print_route(const std::string &name) const
     std::vector<std::string> values_to_print =
             allRoutes_.at(name)->getPoints();
 
-    for (std::string& point : values_to_print){
+    for (const std::string& point : values_to_print){
 
         // if the point isnt the first one add -> to the print
         if (point != values_to_print.front()){
@@ -128,7 +141,7 @@ void OrienteeringMap::greatest_rise(const std::string &point_name) const
               << highest_rise <<" meters, is on route(s):"
               << std::endl;
 
-    for (auto& route : routes_with_highest_rise){
+    for (const auto& route : routes_with_highest_rise){
         std::cout << " - " << route << std::endl;
     }
 
@@ -136,7 +149,7 @@ void OrienteeringMap::greatest_rise(const std::string &point_name) const
 
 bool OrienteeringMap::IsRoute(std::string route_name) const
 {
-    for (auto& route : allRoutes_){
+    for (const auto& route : allRoutes_){
         if (route.first == route_name){
             return true;
         }
@@ -147,9 +160,9 @@ bool OrienteeringMap::IsRoute(std::string route_name) const
 bool OrienteeringMap::IsPoint(std::string point_name) const
 {
 
-    for (auto& route : allPoints_){
+    for (const auto& point : allPoints_){
 
-        if (route.first == point_name){
+        if (point.first == point_name){
             return true;
         }
     }
@@ -165,7 +178,7 @@ std::vector<std::string> OrienteeringMap::getHighestRise(
     // save pointer to the control point
     Point* pointer_to_point = allPoints_.at(point_name);
 
-    for (auto& route : allRoutes_){
+    for (const auto& route : allRoutes_){
         int current_rise = route.second->GreatestRise(pointer_to_point);
 
         // check if the current route has a higher rise

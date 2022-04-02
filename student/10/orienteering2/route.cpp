@@ -39,7 +39,7 @@ std::vector<std::string> Route::getPoints() const
     std::vector<std::string> point_names;
 
     // loop through the route points
-    for(auto& point : route_){
+    for(const auto point : route_){
 
         // add each point name to the list
         std::string point_name = point->getName();
@@ -70,7 +70,7 @@ int Route::GreatestRise(Point *control_point) const
     int last_height = 0;
     bool is_found = false;
 
-    for (auto& point : route_){
+    for (const auto point : route_){
         int current_height = point->getHeight();
 
         // set flag true true if the point is found
@@ -97,7 +97,7 @@ void Route::CalculateLenght()
 {
     std::vector<int> last_coords = route_.front()->getCoordinates();
     double length = 0;
-    for(auto& point : route_){
+    for(const auto point : route_){
         // get current coordinates and their x and y coordinates
         std::vector<int> current_coords = point->getCoordinates();
         int current_x = current_coords.front();
@@ -124,7 +124,7 @@ void Route::CalculateLenght()
 bool Route::IsPoint(Point *control_point) const
 {
     // loop through the route_ vector
-    for(auto& point : route_){
+    for(const auto point : route_){
 
         // check if the value is the same as the one we are
         // looking for
