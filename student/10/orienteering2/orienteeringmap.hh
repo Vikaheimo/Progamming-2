@@ -25,6 +25,7 @@
 #include "point.hh"
 #include "route.hh"
 #include "iostream"
+#include "iomanip"
 
 class OrienteeringMap
 {
@@ -73,13 +74,11 @@ public:
     void greatest_rise(const std::string& point_name) const;
 
 private:
-    // Add here attributes and private methods.
-    // At least you need a datastructure for points or routes or for both,
-    // containing Point* or Route* objects (pointers).
-    // Good candidates for such structures are STL maps or vectors.
 
+    // maps to store points and routes
     std::map<std::string, Point*> allPoints_;
     std::map<std::string, Route*> allRoutes_;
+
     int mapWidth;
     int mapHeight;
 

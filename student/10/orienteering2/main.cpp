@@ -59,7 +59,8 @@
  *      UserID: csviik
  *      E-Mail: vili.ikaheimo@tuni.fi
  *
- * Notes about the progam and it's implementation
+ * Notes about the progam and it's implementation:
+ *      Has two classes called Point and Route
 */
 
 #include "orienteeringmap.hh"

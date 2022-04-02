@@ -3,7 +3,7 @@
 # COMP.CS.110 Ohjelmointi 2: Rakenteet / Programming 2: Structures          #
 # Project3: Suunnistus / Orienteering                                       #
 # File: point.cpp                                                           #
-# Description: The implementation of the point class                        #
+# Description: Implementation of the point class                            #
 # Notes:                                                                    #
 # Program author:                                                           #
 #       Name: Vili Ikäheimo                                                 #
@@ -17,6 +17,7 @@
 Point::Point(std::string name, int height,
              int x_coord, int y_coord, char marker):
 name_(name), height_(height), mapMarker_(marker){
+
     // add x-coordinate as the first element and
     // y-coordinate as the second element
     coordinates_.push_back(x_coord);

@@ -1,3 +1,16 @@
+/*
+#############################################################################
+# COMP.CS.110 Ohjelmointi 2: Rakenteet / Programming 2: Structures          #
+# Project3: Suunnistus / Orienteering                                       #
+# File: orienteeringmap.cpp                                                 #
+# Description: Implementation for the class Orienteeringmap                 #
+# Program author:                                                           #
+#       Name: Vili Ikäheimo                                                 #
+#       Student number: 150286761                                           #
+#       UserID: csviik                                                      #
+#       E-Mail: vili.ikaheimo@tuni.fi                                       #
+#############################################################################
+*/
 #include "orienteeringmap.hh"
 
 OrienteeringMap::OrienteeringMap()
@@ -7,6 +20,8 @@ OrienteeringMap::OrienteeringMap()
 
 OrienteeringMap::~OrienteeringMap()
 {
+    // loop trough the maps with points and routes
+    // and delete all the values
     for (auto& route : allRoutes_){
         delete route.second;
 
@@ -168,9 +183,11 @@ void OrienteeringMap::route_length(const std::string &name) const
                   << std::endl;
         return;
     }
+
     double length = allRoutes_.at(name)->getLength();
 
-    std::cout << "Route " << name << " lenght was " << length <<std::endl;
+    std::cout<< std::setprecision(2)
+             << "Route " << name << " lenght was " << length <<std::endl;
 
 }
 
@@ -184,7 +201,7 @@ void OrienteeringMap::greatest_rise(const std::string &point_name) const
         return;
     }
 
-    // get highest rise
+    // gets the highest rise
     int highest_rise = 0;
     std::vector<std::string> routes_with_highest_rise =
             getHighestRise(highest_rise, point_name);
@@ -193,11 +210,13 @@ void OrienteeringMap::greatest_rise(const std::string &point_name) const
         std::cout<< "No route rises after point " << point_name << std::endl;
         return;
     }
+
     std::cout << "Greatest rise after point "
               << point_name << ", "
               << highest_rise <<" meters, is on route(s):"
               << std::endl;
 
+    // loop trough the routes and print them line by line
     for (const auto& route : routes_with_highest_rise){
         std::cout << " - " << route << std::endl;
     }
