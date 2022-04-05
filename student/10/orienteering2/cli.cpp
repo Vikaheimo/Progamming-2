@@ -1,3 +1,12 @@
+/*
+#############################################################################
+# Program author:                                                           #
+#       Name: Vili Ikäheimo                                                 #
+#       Student number: 150286761                                           #
+#       UserID: csviik                                                      #
+#       E-Mail: vili.ikaheimo@tuni.fi                                       #
+#############################################################################
+*/
 #include "cli.hh"
 #include <iostream>
 #include <algorithm>

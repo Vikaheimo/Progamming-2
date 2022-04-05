@@ -3,7 +3,8 @@
 # COMP.CS.110 Ohjelmointi 2: Rakenteet / Programming 2: Structures          #
 # Project3: Suunnistus / Orienteering                                       #
 # File: orienteeringmap.cpp                                                 #
-# Description: Implementation for the class Orienteeringmap                 #
+# Description: Implementation for the class Orienteeringmap that stores     #
+# data for the map                                                          #
 # Program author:                                                           #
 #       Name: Vili Ikäheimo                                                 #
 #       Student number: 150286761                                           #
@@ -41,7 +42,7 @@ void OrienteeringMap::set_map_size(int width, int height)
 void OrienteeringMap::add_point(std::string name, int x, int y,
                                 int height, char marker)
 {
-    // makes a new point and stores the pointer to it in the
+    // makes a new control point and stores the pointer to it in the
     // all points map
     Point* new_point = new Point(name, height, x, y, marker);
     allPoints_.insert(std::make_pair(name, new_point));
@@ -50,7 +51,7 @@ void OrienteeringMap::add_point(std::string name, int x, int y,
 bool OrienteeringMap::connect_route(std::string from,
                                     std::string to, std::string route_name)
 {
-    // check if both points exist
+    // check if either of the points don't exist 
     if (!IsPoint(from) or !IsPoint(to)){
         return false;
 
@@ -97,7 +98,9 @@ void OrienteeringMap::print_map() const
 
     std::cout << std::endl;
 
+    // while loop for the rest of the print rows
     while (row_num<= mapHeight){
+
         // get the lenght of the current row number
         int current_num_length = std::to_string(row_num).length();
 
@@ -162,9 +165,12 @@ void OrienteeringMap::print_route(const std::string &name) const
                   << std::endl;
         return;
     }
+
+    // get all the points in the given route
     std::vector<std::string> values_to_print =
             allRoutes_.at(name)->getPoints();
 
+    // loop through and print points
     for (const std::string& point : values_to_print){
 
         // if the point isnt the first one add -> to the print
@@ -183,6 +189,8 @@ void OrienteeringMap::route_length(const std::string &name) const
                   << std::endl;
         return;
     }
+
+    // get the lenght of the route
 
     double length = allRoutes_.at(name)->getLength();
 
@@ -203,10 +211,12 @@ void OrienteeringMap::greatest_rise(const std::string &point_name) const
 
     // gets the highest rise
     int highest_rise = 0;
+
     std::vector<std::string> routes_with_highest_rise =
             getHighestRise(highest_rise, point_name);
 
     if(highest_rise == no_rise){
+
         std::cout<< "No route rises after point " << point_name << std::endl;
         return;
     }
