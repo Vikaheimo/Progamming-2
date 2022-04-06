@@ -1,7 +1,8 @@
 #ifndef CHICKEN_HH
 #define CHICKEN_HH
-#include"bird.hh"
 
+#include"bird.hh"
+#include <string>
 class Owl: public Bird
 {
 public:
