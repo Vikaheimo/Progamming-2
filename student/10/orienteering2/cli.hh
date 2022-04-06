@@ -12,6 +12,11 @@
 #          a class' functions.                                              #
 #        * This could be upgraded to have commandhistory with a relative    #
 #          ease.                                                            #
+# Program author:                                                           #
+#       Name: Vili Ikäheimo                                                 #
+#       Student number: 150286761                                           #
+#       UserID: csviik                                                      #
+#       E-Mail: vili.ikaheimo@tuni.fi                                       #
 #############################################################################
 */
 

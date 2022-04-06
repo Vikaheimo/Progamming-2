@@ -9,6 +9,11 @@
 #        * Student's don't touch this file.                                 #
 #        * Understanding how the module works isn't necessary to complete   #
 #          this exercise.                                                   #
+# Program author:                                                           #
+#       Name: Vili Ikäheimo                                                 #
+#       Student number: 150286761                                           #
+#       UserID: csviik                                                      #
+#       E-Mail: vili.ikaheimo@tuni.fi                                       #
 #############################################################################
 */
 

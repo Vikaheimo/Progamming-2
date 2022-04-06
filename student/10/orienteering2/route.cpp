@@ -18,7 +18,7 @@ Route::Route(std::string name):
 name_(name) {
 
     // set lenght of the route to zero, so that the value can
-    // still be used
+    // still be checked
     lengthOfRoute_ = 0;
 }
 
@@ -51,8 +51,10 @@ std::vector<std::string> Route::getPoints() const
 
 double Route::getLength()
 {
+    const int not_calculated = 0;
+
     // check if the lenght of the route hasn't been calculated yet
-    if (lengthOfRoute_ == 0){
+    if (lengthOfRoute_ == not_calculated){
         CalculateLenght();
     }
 

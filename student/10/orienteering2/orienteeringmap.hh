@@ -82,24 +82,28 @@ private:
     int mapWidth;
     int mapHeight;
 
-    // Method that return true if a route exists, if it doesn't
+    // Method that return true if a given route exists, if it doesn't
     // returns false.
+    // Takes route name as a parameter
     bool IsRoute(std::string route_name) const;
 
-    // Method that return true if a point exists, if it doesn't
+    // Method that return true if a given point exists, if it doesn't
     // returns false.
+    // Takes point name as a parameter
     bool IsPoint(std::string point_name) const;
 
     // Method to find the highes rise after a given point. Returns
     // a vector with the names of the routes with the highest rise and
-    // stores the highest rise in the parameter highest_rise.
+    // stores the highest rise in the parameter highest_rise. If there are
+    // no routes that rises after a given point, then returs a empty vector
+    // and inserts 0 to highest rise.
     std::vector<std::string> getHighestRise(
             int& highest_rise, std::string point_name) const;
 
     // Takes x and y coordinates as parameters and checks if a
     // control point is at the given coordinates. Returns true if
-    // there is and puts the marker to the point into marker parameter.
-    // If there is no point in the coordinates, returns false.
+    // there is and inserts the marker to the point into marker parameter.
+    // If there is no point in the coordinates, returns false and a empty marker.
     bool isPointCoord(int x, int y, char& marker) const ;
 
 
