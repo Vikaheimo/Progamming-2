@@ -21,7 +21,7 @@ void MainWindow::count_bmi()
      std::string weight_str = ui->weightLineEdit->text().toUtf8().constData();
      std::string height_str = ui->heightLineEdit->text().toUtf8().constData();
      std::string text;
-     if (weight_str.length() == 0 or height_str.length() == 0 or height_str == "0"){
+     if (weight_str.length() == 0 or height_str.length() == 0 or height_str == "0" or weight_str == "0"){
          ui->infoTextBrowser->setText("Cannot count");
          ui->resultLabel->setText("");
          return;
