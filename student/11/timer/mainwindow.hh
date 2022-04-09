@@ -22,11 +22,18 @@ public:
     QTimer* timer;
 
 private slots:
-    // Add your slots here
+    void change_time();
+    void on_startButton_clicked();
+    void stop_timer();
+    void reset_timer();
 
 private:
     Ui::MainWindow *ui;
     // Add other necessary members here
+    int seconds_;
+    int minutes_;
+
+
 };
 
 #endif // MAINWINDOW_HH
