@@ -21,6 +21,6 @@ public slots:
 private:
     Ui::MainWindow *ui;
 
-    double calculate_bmi(int weight, int height);
+    double calculate_bmi(double weight, double height);
 };
 #endif // MAINWINDOW_HH

@@ -22,13 +22,13 @@ void MainWindow::count_bmi()
      std::string height_str = ui->heightLineEdit->text().toUtf8().constData();
      std::string text;
      if (weight_str.length() == 0 or height_str.length() == 0 or height_str == "0"){
-         ui->infoTextBrowser->setText("Cannot count.");
+         ui->infoTextBrowser->setText("Cannot count");
          ui->resultLabel->setText("");
          return;
      }
      int height = std::stoi(height_str);
      int weight = std::stoi(weight_str);
-     int bmi = calculate_bmi(weight, height);
+     double bmi = calculate_bmi(weight, height);
 
      if (bmi < 18.5){
          text = "You are underweight.";
@@ -42,9 +42,9 @@ void MainWindow::count_bmi()
      ui->resultLabel->setText(QString::number(bmi));
 }
 
-double MainWindow::calculate_bmi(int weight, int height)
+double MainWindow::calculate_bmi(double weight, double height)
 {
-    double height_m = height/100;
+    double height_m = height / 100;
     return weight/(height_m * height_m);
 }
 
